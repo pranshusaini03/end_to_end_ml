@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IG and CGPA Input Form</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="form-container">
+        <h2>Enter Your IG and CGPA</h2>
+        <form id="placementForm">
+            <div class="form-group">
+                <label for="ig">Internal Grades (IG):</label>
+                <input type="number" id="ig" name="ig" min="0" max="200" step="0.01" placeholder="Enter IG" required>
+            </div>
+            <div class="form-group">
+                <label for="cgpa">Cumulative GPA (CGPA):</label>
+                <input type="number" id="cgpa" name="cgpa" min="0" max="10" step="0.01" placeholder="Enter CGPA" required>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('placementForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Get input values
+            const ig = document.getElementById('ig').value;
+            const cgpa = document.getElementById('cgpa').value;
+            
+            // Prepare data for sending to the server
+            const formData = new FormData();
+            formData.append('ig', ig);
+            formData.append('cgpa', cgpa);
+            
+            // Send data to the server
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display the result
+                document.getElementById('result').textContent = `Placement Prediction: ${data.placement}`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('result').textContent = 'Error predicting placement';
+            });
+        });
+    </script>
+</body>
+</html>
