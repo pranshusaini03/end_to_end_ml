@@ -1,0 +1,7 @@
+pickle
+Flask
+numpy
+matplotlib
+pandas
+pickle-mixin
+scikit-learn  # If your model.pkl uses sklearn
