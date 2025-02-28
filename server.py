@@ -3,7 +3,7 @@ import pickle
 import numpy as np
 
 # Load the trained model
-with open(r'C:\Users\Pranshu Saini\Desktop\New folder\model.pkl', 'rb') as file:
+with open(r'model.pkl', 'rb') as file:
     model = pickle.load(file)
 
 # Load the saved scaler
